@@ -1,5 +1,6 @@
 FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAR_FILE
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+RUN mkdir -p /usr/uams
+COPY 'target/uams-0.0.1-SNAPSHOT.war' /usr/uams/
+RUN chmod -R 777 /usr/uams
+WORKDIR /usr/uams/
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","uams-0.0.1-SNAPSHOT.war"]
